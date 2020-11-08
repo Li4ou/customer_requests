@@ -12,9 +12,10 @@ CACHE_TTL = 60 * 5
 @method_decorator(cache_page(CACHE_TTL), name='list')
 @method_decorator(cache_page(CACHE_TTL), name='retrieve')
 class BidViewSet(viewsets.ModelViewSet):
-    queryset = Bid.objects.all()
+    queryset = Bid.objects.select_related('responsible', 'client').all()
     serializer_class = BidSerializer
     http_method_names = ['get', 'delete']
+
 
 # Create your views here.
 
@@ -33,4 +34,6 @@ class ResponsiblerViewSet(viewsets.ModelViewSet):
     queryset = Responsible.objects.all()
     serializer_class = ResponsibleSerializer
     http_method_names = ['get','post', 'patch', 'delete']
+
+
 
